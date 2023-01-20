@@ -4,9 +4,10 @@ import logo from "../img/employeePortalLogo.png";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Navbar from "./Navbar";
 
 const Background = styled.div`
-  background-color: #00ADB5;
+  background-color: #00adb5;
   height: 100vh;
   width: 100vw;
 `;
@@ -23,7 +24,6 @@ const Flex = styled.form`
     flex-direction: column;
     align-items: center;
   }
-
 `;
 const FlexForm = styled.form`
   display: flex;
@@ -36,9 +36,7 @@ const FlexForm = styled.form`
     flex-direction: column;
     align-items: center;
   }
-
 `;
-
 
 //logo
 const Logo = styled.img`
@@ -46,7 +44,6 @@ const Logo = styled.img`
   width: 100px;
   padding: 1rem 1rem 0.5rem 1rem;
 `;
-
 
 const FlexBody = styled.div`
   display: flex;
@@ -70,8 +67,8 @@ const WelcomeMessage = styled.h1`
 
 const Inputroll = styled.input`
   font-size: 1.8rem;
-  color: #393E46;
-  background-color: #EEEEEE;
+  color: #393e46;
+  background-color: #eeeeee;
   text-align: center;
   padding: 1rem;
   font-family: "cursive";
@@ -84,8 +81,8 @@ const Inputroll = styled.input`
 
 const SubmitButton = styled.button`
   font-size: 1.8rem;
-  color: #393E46;
-  background-color: #EEEEEE;
+  color: #393e46;
+  background-color: #eeeeee;
   text-align: center;
   padding: 1rem 3rem;
   font-family: "cursive";
@@ -110,15 +107,18 @@ const ShowData = styled.div`
   color: #ffffff;
   text-align: center;
   display: inline;
-  padding: 2rem 1rem 1rem 1rem;
+  padding: 1rem;
   font-family: "Itim", "cursive";
 `;
 
 function EmployeeEntry() {
-  const [employee, setemployee] = useState({ employeeID: "", name: "", number: "" });
+  const [employee, setemployee] = useState({
+    employeeID: "",
+    name: "",
+    number: "",
+  });
 
   const [redMessage, setRedMessage] = useState("");
-
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -127,9 +127,9 @@ function EmployeeEntry() {
     } else if (name === "name") {
       setemployee({ ...employee, name: value });
     } else if (name === "number") {
-     if(value >= 0 && value <= 9999999999){
+      if (value >= 0 && value <= 9999999999) {
         setemployee({ ...employee, number: value });
-      }     
+      }
     }
   };
 
@@ -137,7 +137,7 @@ function EmployeeEntry() {
     event.preventDefault();
     const { employeeID, name, number } = employee;
 
-    if(employeeID === "" || name === "" || number === ""){
+    if (employeeID === "" || name === "" || number === "") {
       setRedMessage("Roll No. or Name can't be empty !!");
       return;
     }
@@ -151,16 +151,16 @@ function EmployeeEntry() {
     try {
       const { data } = await axios.post(
         "http://localhost:5000/api/entry",
-        { employeeID: employeeID, name: name , number: number },
+        { employeeID: employeeID, name: name, number: number },
         config
       );
       console.log(data);
       const mesg = data.message;
       const time = data.time;
-      
-      setemployee({ employeeID: "", name: "" , number: ""  });
+
+      setemployee({ employeeID: "", name: "", number: "" });
       setRedMessage(() => {
-        return `${mesg} ${time!=null ? " at "+ time : ""}`;
+        return `${mesg} ${time != null ? " at " + time : ""}`;
       });
       setTimeout(() => {
         setRedMessage("");
@@ -173,10 +173,18 @@ function EmployeeEntry() {
 
   return (
     <Background>
-      <Flex>
+      {/* <Flex>
         <Logo src={logo} />
-        <ShowData><Link to="/showData">view Employee Data</Link></ShowData>
-      </Flex>
+        <FlexForm>
+          <ShowData>
+            <Link to="/showData" style={{"textDecoration": "none"}} >view Employee Data</Link>
+          </ShowData>
+          <ShowData>
+            <Link to="/searchData" style={{"textDecoration": "none"}}>Search Employee Data</Link>
+          </ShowData>
+        </FlexForm>
+      </Flex> */}
+      <Navbar />
 
       <FlexBody>
         <WelcomeMessage>Welcome</WelcomeMessage>

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const Student = new mongoose.Schema(
+const Emoloyee = new mongoose.Schema(
   {
     employeeID: { type: Number , required: true },
     name: { type: String, required: true },
@@ -9,4 +9,4 @@ const Student = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("student", Student);
+module.exports = mongoose.model("employee", Emoloyee);

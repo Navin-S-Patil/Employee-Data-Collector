@@ -3,6 +3,7 @@ import styled from "styled-components";
 import logo from "../img/employeePortalLogo.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import Navbar from "./Navbar";
 
 const Background = styled.div`
   background-color: #00adb5;
@@ -113,39 +114,38 @@ function ShwoData() {
   const [employeeData, setEmployeeData] = useState([]);
 
   useEffect(() => {
-
-    axios
-      .get("http://localhost:5000/api/showData")
-      .then((res) => {
-
-        setEmployeeData(res.data.data);
-      });
-
+    axios.get("http://localhost:5000/api/showData").then((res) => {
+      setEmployeeData(res.data.data);
+    });
   }, []);
 
   return (
     <Background>
-      <Flex>
+      {/* <Flex>
         <Logo src={logo} />
         <ShowData>
           <Link to="/">Enter Employee Data</Link>
         </ShowData>
-      </Flex>
+      </Flex> */}
+      <Navbar />
 
       <WelcomeMessage>Welcome</WelcomeMessage>
 
-      <Table>
-        <TableRow>
-          <TableHeadling style={{ borderRadius: "0.3rem 0rem 0rem 0.3rem" }}>
-            Emoloyee ID
-          </TableHeadling>
-          <TableHeadling style={{ borderRadius: "0rem 0rem 0rem 0rem" }}>
-            Name
-          </TableHeadling>
-          <TableHeadling style={{ borderRadius: "0rem 0.3rem 0.3rem 0rem" }}>
-            Mobile No.
-          </TableHeadling>
-        </TableRow>
+      {employeeData.length === 0 ? (
+        <h1 style={{ textAlign: "center", color: "#222831" }}>No Data Found</h1>
+      ) : (
+        <Table>
+          <TableRow>
+            <TableHeadling style={{ borderRadius: "0.3rem 0rem 0rem 0.3rem" }}>
+              Emoloyee ID
+            </TableHeadling>
+            <TableHeadling style={{ borderRadius: "0rem 0rem 0rem 0rem" }}>
+              Name
+            </TableHeadling>
+            <TableHeadling style={{ borderRadius: "0rem 0.3rem 0.3rem 0rem" }}>
+              Mobile No.
+            </TableHeadling>
+          </TableRow>
 
           {employeeData.map((item) => {
             return (
@@ -156,8 +156,8 @@ function ShwoData() {
               </TableNormalRow>
             );
           })}
-
-      </Table>
+        </Table>
+      )}
     </Background>
   );
 }

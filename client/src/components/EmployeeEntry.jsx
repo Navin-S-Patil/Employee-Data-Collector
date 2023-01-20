@@ -3,6 +3,7 @@ import styled from "styled-components";
 import logo from "../img/employeePortalLogo.png";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Background = styled.div`
   background-color: #00ADB5;
@@ -11,16 +12,25 @@ const Background = styled.div`
 `;
 
 //flexbox
-const Flex = styled.div`
+const Flex = styled.form`
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
   flex-wrap: wrap;
-  /* @media screen {
-    @media (max-width: 600px) {
-      flex-direction: column;
-       
-  } */
+
+  @media screen and (max-width: 700px) {
+    flex-direction: column;
+    align-items: center;
+  }
+
+`;
+const FlexForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
 
   @media screen and (max-width: 700px) {
     flex-direction: column;
@@ -29,24 +39,14 @@ const Flex = styled.div`
 
 `;
 
+
 //logo
 const Logo = styled.img`
   height: 100px;
   width: 100px;
-  padding: 1rem;
+  padding: 1rem 1rem 0.5rem 1rem;
 `;
 
-const StudentCount = styled.div`
-  font-size: 1.7rem;
-  color: #ffffff;
-  text-align: center;
-  display: inline;
-  padding: 1.5rem;
-  font-family: "Inter", sans-serif;
-  @media screen and (max-width: 700px) {
-    padding: 1rem;
-  }
-`;
 
 const FlexBody = styled.div`
   display: flex;
@@ -60,7 +60,7 @@ const WelcomeMessage = styled.h1`
   color: #222831;
   text-align: center;
   display: inline;
-  padding: 1rem;
+  /* padding: 1rem; */
   font-family: "Handlee", "cursive";
   margin: 0.4rem;
   @media screen and (max-width: 700px) {
@@ -70,11 +70,11 @@ const WelcomeMessage = styled.h1`
 
 const Inputroll = styled.input`
   font-size: 1.8rem;
-  color: #000;
-  background-color: #E3F6FF;
+  color: #393E46;
+  background-color: #EEEEEE;
   text-align: center;
   padding: 1rem;
-  font-family: "Irish Grover", "cursive";
+  font-family: "cursive";
   border: none;
   border-radius: 1.2rem;
   margin: 1rem 1rem;
@@ -84,11 +84,11 @@ const Inputroll = styled.input`
 
 const SubmitButton = styled.button`
   font-size: 1.8rem;
-  color: #000;
-  background-color: #d9d9d9;
+  color: #393E46;
+  background-color: #EEEEEE;
   text-align: center;
   padding: 1rem 3rem;
-  font-family: "Irish Grover", "cursive";
+  font-family: "cursive";
   border: none;
   border-radius: 1.2rem;
   margin: 1.8rem 1rem;
@@ -105,35 +105,37 @@ const CheckTime = styled.div`
   font-family: "Itim", "cursive";
 `;
 
+const ShowData = styled.div`
+  font-size: 1.8rem;
+  color: #ffffff;
+  text-align: center;
+  display: inline;
+  padding: 2rem 1rem 1rem 1rem;
+  font-family: "Itim", "cursive";
+`;
+
 function EmployeeEntry() {
-  const [student, setStudent] = useState({ rollNo: "", name: "" });
-  // const [error, setError] = useState("");
-//   const [studentCount, setStudentCount] = useState(0);
+  const [employee, setemployee] = useState({ rollNo: "", name: "", number: "" });
 
   const [redMessage, setRedMessage] = useState("");
 
-//   useEffect(() => {
-//     const fetchStudentCount = async () => {
-//       try {
-//         const { data } = await axios.get(
-//           "http://localhost:5000/api/studentCount"
-//         );
-//         // setStudentCount(data.length);
-//       } catch (error) {
-//         console.log(error);
-//       }
-//     };
-//     fetchStudentCount();
-//   }, []);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setStudent({ ...student, [name]: value });
+    if (name === "rollNo") {
+      setemployee({ ...employee, rollNo: value });
+    } else if (name === "name") {
+      setemployee({ ...employee, name: value });
+    } else if (name === "number") {
+     if(value >= 0 && value <= 9999999999){
+        setemployee({ ...employee, number: value });
+      }     
+    }
   };
 
   const handleClick = async (event) => {
     event.preventDefault();
-    const { rollNo, name } = student;
+    const { rollNo, name } = employee;
 
     if(rollNo === "" || name === ""){
       setRedMessage("Roll No. or Name can't be empty !!");
@@ -158,11 +160,7 @@ function EmployeeEntry() {
       const mesg = data.message;
       const time = data.time;
       
-      setStudent({ rollNo: "", name: "" });
-      const { data: studentCount } = await axios.get(
-        "http://localhost:5000/api/studentCount"
-      );
-    //   setStudentCount(studentCount.length);
+      setemployee({ rollNo: "", name: "" });
       setRedMessage(() => {
         return `${mesg} ${time!=null ? " at "+ time : ""}`;
       });
@@ -177,31 +175,36 @@ function EmployeeEntry() {
 
   return (
     <Background>
-      {/* NavBar */}
       <Flex>
         <Logo src={logo} />
-        {/* <StudentCount>Student Count : {studentCount}</StudentCount> */}
+        <ShowData><Link to="/showData">view Employee Data</Link></ShowData>
       </Flex>
 
-      {/* Body */}
       <FlexBody>
-        <WelcomeMessage>Hello Students</WelcomeMessage>
-        <Flex>
+        <WelcomeMessage>Welcome</WelcomeMessage>
+        <FlexForm>
           <Inputroll
             type="text"
-            placeholder="Roll No."
+            placeholder="Emoloyee ID"
             name="rollNo"
             onChange={handleChange}
-            value={student.rollNo}
+            value={employee.rollNo}
           />
           <Inputroll
             type="text"
-            placeholder="Student Name"
+            placeholder="Employee Name"
             name="name"
             onChange={handleChange}
-            value={student.name}
+            value={employee.name}
           />
-        </Flex>
+          <Inputroll
+            type="text"
+            placeholder="Employee Mobile No."
+            name="number"
+            onChange={handleChange}
+            value={employee.number}
+          />
+        </FlexForm>
         <SubmitButton onClick={handleClick}>Submit</SubmitButton>
         <CheckTime>{redMessage}</CheckTime>
       </FlexBody>

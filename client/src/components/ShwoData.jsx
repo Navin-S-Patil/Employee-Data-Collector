@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import logo from "../img/employeePortalLogo.png";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Background = styled.div`
   background-color: #00adb5;
   height: 100vh;
   width: 100vw;
 `;
-
 
 const Flex = styled.form`
   display: flex;
@@ -85,9 +85,44 @@ const TableHeadling = styled.th`
   margin: auto auto;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  font-size: 1.5rem;
+`;
+
+const TableNormalRow = styled.tr`
+  color: #eeeeee;
+  background-color: #222831;
+  font-size: 1.2rem;
+  text-align: center;
+  margin: auto auto;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  border-radius: 0.3rem;
+  padding: 0.2rem;
+`;
+
+const TableData = styled.td`
+  padding: 0.4rem 0.4rem;
+  text-align: center;
+  margin: auto auto;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  font-size: 1.4rem;
 `;
 
 function ShwoData() {
+  const [employeeData, setEmployeeData] = useState([]);
+
+  useEffect(() => {
+
+    axios
+      .get("http://localhost:5000/api/showData")
+      .then((res) => {
+
+        setEmployeeData(res.data.data);
+      });
+
+  }, []);
+
   return (
     <Background>
       <Flex>
@@ -111,16 +146,17 @@ function ShwoData() {
             Mobile No.
           </TableHeadling>
         </TableRow>
-        <tr>
-          <td>Jill</td>
-          <td>Smith</td>
-          <td>50</td>
-        </tr>
-        <tr>
-          <td>Eve</td>
-          <td>Jackson</td>
-          <td>94</td>
-        </tr>
+
+          {employeeData.map((item) => {
+            return (
+              <TableNormalRow>
+                <TableData>{item.employeeID}</TableData>
+                <TableData>{item.name}</TableData>
+                <TableData>{item.number}</TableData>
+              </TableNormalRow>
+            );
+          })}
+
       </Table>
     </Background>
   );

@@ -135,14 +135,12 @@ function EmployeeEntry() {
 
   const handleClick = async (event) => {
     event.preventDefault();
-    const { employeeID, name } = employee;
+    const { employeeID, name, number } = employee;
 
-    if(employeeID === "" || name === ""){
+    if(employeeID === "" || name === "" || number === ""){
       setRedMessage("Roll No. or Name can't be empty !!");
       return;
     }
-
-    
 
     const config = {
       headers: {
@@ -152,15 +150,15 @@ function EmployeeEntry() {
 
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/attendence",
-        { employeeID: employeeID, name: name },
+        "http://localhost:5000/api/entry",
+        { employeeID: employeeID, name: name , number: number },
         config
       );
       console.log(data);
       const mesg = data.message;
       const time = data.time;
       
-      setemployee({ employeeID: "", name: "" });
+      setemployee({ employeeID: "", name: "" , number: ""  });
       setRedMessage(() => {
         return `${mesg} ${time!=null ? " at "+ time : ""}`;
       });

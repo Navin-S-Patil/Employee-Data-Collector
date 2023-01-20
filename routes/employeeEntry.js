@@ -3,7 +3,7 @@ const Employee = require("../models/employee") ;
 
 router.post("/", async (req, res) => {
   const newUser = new Employee({
-    rollNo: req.body.employeeID,
+    employeeID: req.body.employeeID,
     name: req.body.name,
     number : req.body.number,
   });
@@ -12,11 +12,12 @@ router.post("/", async (req, res) => {
 
   try {
     const emp = await Employee.findOne({
-      rollNo: req.body.rollNo,
+      employeeID: req.body.employeeID,
       name: req.body.name,
+      number : req.body.number,
     });
-    const EmployeeRoll = await Employee.findOne({ rollNo: req.body.rollNo });
-    const EmployeeName = await Employee.findOne({ name: req.body.name });
+    const EmployeeRoll = await Employee.findOne({ employeeID: req.body.employeeID });
+    // const EmployeeName = await Employee.findOne({ name: req.body.name });
 
     
     if (!emp && !EmployeeRoll) {
@@ -25,7 +26,7 @@ router.post("/", async (req, res) => {
       console.log("loggedIn");
       res
         .status(200)
-        .json({ success: true, data: savedUser, message: "Checked In"});
+        .json({ success: true, data: savedUser, message: "Employee Data Saved" , time: null});
     } 
     //checkout wala code (no use)
     // else if (emp) {

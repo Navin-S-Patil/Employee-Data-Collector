@@ -115,15 +115,15 @@ const ShowData = styled.div`
 `;
 
 function EmployeeEntry() {
-  const [employee, setemployee] = useState({ rollNo: "", name: "", number: "" });
+  const [employee, setemployee] = useState({ employeeID: "", name: "", number: "" });
 
   const [redMessage, setRedMessage] = useState("");
 
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    if (name === "rollNo") {
-      setemployee({ ...employee, rollNo: value });
+    if (name === "employeeID") {
+      setemployee({ ...employee, employeeID: value });
     } else if (name === "name") {
       setemployee({ ...employee, name: value });
     } else if (name === "number") {
@@ -135,9 +135,9 @@ function EmployeeEntry() {
 
   const handleClick = async (event) => {
     event.preventDefault();
-    const { rollNo, name } = employee;
+    const { employeeID, name } = employee;
 
-    if(rollNo === "" || name === ""){
+    if(employeeID === "" || name === ""){
       setRedMessage("Roll No. or Name can't be empty !!");
       return;
     }
@@ -153,14 +153,14 @@ function EmployeeEntry() {
     try {
       const { data } = await axios.post(
         "http://localhost:5000/api/attendence",
-        { rollNo: rollNo, name: name },
+        { employeeID: employeeID, name: name },
         config
       );
       console.log(data);
       const mesg = data.message;
       const time = data.time;
       
-      setemployee({ rollNo: "", name: "" });
+      setemployee({ employeeID: "", name: "" });
       setRedMessage(() => {
         return `${mesg} ${time!=null ? " at "+ time : ""}`;
       });
@@ -186,9 +186,9 @@ function EmployeeEntry() {
           <Inputroll
             type="text"
             placeholder="Emoloyee ID"
-            name="rollNo"
+            name="employeeID"
             onChange={handleChange}
-            value={employee.rollNo}
+            value={employee.employeeID}
           />
           <Inputroll
             type="text"

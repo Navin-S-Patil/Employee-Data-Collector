@@ -5,8 +5,8 @@ const dotenv = require("dotenv");
 require("dotenv").config({ path: "./config.env" });
 const cors = require("cors");
 
-const studentAttendance = require("./routes/attendence");
-const studentCount = require("./routes/studentCount");
+const employeeEntry = require("./routes/employeeEntry");
+const employeeData = require("./routes/showData");
 
 mongoose.set("strictQuery", false);
 
@@ -19,8 +19,8 @@ mongoose
 
 app.use(cors());
 app.use(express.json());
-app.use("/api/attendence", studentAttendance);
-app.use("/api/studentCount", studentCount);
+app.use("/api/entry", employeeEntry);
+app.use("/api/showdata", employeeData);
 
 app.listen(process.env.PORT, () => {
   console.log("Backend server is running! " + process.env.PORT);

@@ -184,8 +184,18 @@ function SearchData() {
   const handleClick = async (e) => {
     e.preventDefault();
 
+    setEmployeeData([]);
+
     if (search.length === 0) {
       setRedMessage("Please Enter Employee ID");
+      setTimeout(() => {
+        setRedMessage("");
+      }, 5000);
+      return;
+    }
+
+    if (search.length !== 24) {
+      setRedMessage("Please Enter Valid Employee ID");
       setTimeout(() => {
         setRedMessage("");
       }, 5000);
@@ -199,11 +209,15 @@ function SearchData() {
     };
 
     try {
-      const { data } = await axios
-        .post("http://localhost:5000/api/searchdata", { search }, config)
+      await axios
+        .post("http://localhost:5000/api/searchdata/", { search }, config)
         .then((res) => {
-        //   console.log(res.data.data);
+            // console.log(res.data);
           setEmployeeData(res.data.data);
+          setRedMessage(res.data.message);
+          setTimeout(() => {
+            setRedMessage("");
+          }, 5000);
         });
     } catch (error) {
       console.log(error);
@@ -254,9 +268,7 @@ function SearchData() {
               <TableData>{employeeData[0].number}</TableData>
             </TableNormalRow>
           </Table>
-        )
-        }
-          {/* {console.log(employeeData)} */}
+        )}
       </FlexBody>
     </Background>
   );

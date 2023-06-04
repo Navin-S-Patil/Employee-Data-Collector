@@ -1,30 +1,28 @@
 // import "./App.css";
 import styled from "styled-components";
-import logo from "../img/employeePortalLogo.png";
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
 import Navbar from "./Navbar";
 
 const Background = styled.div`
-  background-color: #00adb5;
+  background-color: rgba(153, 147, 147, 0.72);;
   height: 100vh;
   width: 100vw;
 `;
 
 //flexbox
-const Flex = styled.form`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-wrap: wrap;
+// const Flex = styled.form`
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: space-between;
+//   align-items: flex-start;
+//   flex-wrap: wrap;
 
-  @media screen and (max-width: 700px) {
-    flex-direction: column;
-    align-items: center;
-  }
-`;
+//   @media screen and (max-width: 700px) {
+//     flex-direction: column;
+//     align-items: center;
+//   }
+// `;
 const FlexForm = styled.form`
   display: flex;
   flex-direction: column;
@@ -39,11 +37,11 @@ const FlexForm = styled.form`
 `;
 
 //logo
-const Logo = styled.img`
-  height: 100px;
-  width: 100px;
-  padding: 1rem 1rem 0.5rem 1rem;
-`;
+// const Logo = styled.img`
+//   height: 100px;
+//   width: 100px;
+//   padding: 1rem 1rem 0.5rem 1rem;
+// `;
 
 const FlexBody = styled.div`
   display: flex;
@@ -67,11 +65,11 @@ const WelcomeMessage = styled.h1`
 
 const Inputroll = styled.input`
   font-size: 1.8rem;
-  color: #393e46;
-  background-color: #eeeeee;
+  color: #FF1B0F;
+  background-color: #FFE569;
   text-align: center;
   padding: 1rem;
-  font-family: "cursive";
+  font-family: "sans-serif cursive";
   border: none;
   border-radius: 1.2rem;
   margin: 1rem 1rem;
@@ -81,11 +79,11 @@ const Inputroll = styled.input`
 
 const SubmitButton = styled.button`
   font-size: 1.8rem;
-  color: #393e46;
+  color: #FF1B0F;
   background-color: #eeeeee;
   text-align: center;
   padding: 1rem 3rem;
-  font-family: "cursive";
+  font-family: "sans-serif cursive";
   border: none;
   border-radius: 1.2rem;
   margin: 1.8rem 1rem;
@@ -102,14 +100,14 @@ const CheckTime = styled.div`
   font-family: "Itim", "cursive";
 `;
 
-const ShowData = styled.div`
-  font-size: 1.8rem;
-  color: #ffffff;
-  text-align: center;
-  display: inline;
-  padding: 1rem;
-  font-family: "Itim", "cursive";
-`;
+// const ShowData = styled.div`
+//   font-size: 1.8rem;
+//   color: #ffffff;
+//   text-align: center;
+//   display: inline;
+//   padding: 1rem;
+//   font-family: "Itim", "cursive";
+// `;
 
 function EmployeeEntry() {
   const [employee, setemployee] = useState({
@@ -138,7 +136,7 @@ function EmployeeEntry() {
     const { employeeID, name, number } = employee;
 
     if (employeeID === "" || name === "" || number === "") {
-      setRedMessage("Roll No. or Name can't be empty !!");
+      setRedMessage("ID or Name can't be empty !!");
       return;
     }
 
@@ -167,25 +165,13 @@ function EmployeeEntry() {
       }, 5000);
     } catch (error) {
       console.log(error);
-      setRedMessage("Please Enter Valid Roll No. and Name");
+      setRedMessage("Please Enter Valid ID and Name");
     }
   };
 
   return (
     <Background>
-      {/* <Flex>
-        <Logo src={logo} />
-        <FlexForm>
-          <ShowData>
-            <Link to="/showData" style={{"textDecoration": "none"}} >view Employee Data</Link>
-          </ShowData>
-          <ShowData>
-            <Link to="/searchData" style={{"textDecoration": "none"}}>Search Employee Data</Link>
-          </ShowData>
-        </FlexForm>
-      </Flex> */}
       <Navbar />
-
       <FlexBody>
         <WelcomeMessage>Welcome</WelcomeMessage>
         <FlexForm>

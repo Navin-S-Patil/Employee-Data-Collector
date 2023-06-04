@@ -1,8 +1,9 @@
 import "./App.css";
 import EmployeeEntry from "./components/EmployeeEntry";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import ShowData from "./components/ShowData";
 import SearchData from "./components/SearchData";
+import AdminLogin from "./components/AdminLogin";
 
 function App() {
   return (
@@ -12,6 +13,8 @@ function App() {
         <Route path="/" element={<EmployeeEntry />} />
         <Route path="/showData" element={<ShowData />} />
         <Route path="/searchData" element={<SearchData />} />
+        <Route path="/login" element={<AdminLogin />} />
+
 
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

@@ -170,7 +170,7 @@ function EmployeeEntry() {
   };
 
   return (
-    <Background>
+    <>
       <Navbar />
       <FlexBody>
         <WelcomeMessage>Welcome</WelcomeMessage>
@@ -200,7 +200,7 @@ function EmployeeEntry() {
         <SubmitButton onClick={handleClick}>Submit</SubmitButton>
         <CheckTime>{redMessage}</CheckTime>
       </FlexBody>
-    </Background>
+    </>
   );
 }
 

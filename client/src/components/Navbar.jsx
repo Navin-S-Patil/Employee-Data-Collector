@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import logo from "../img/Adobe_logo.png";
 import { Link } from "react-router-dom";
+import { auth } from "../config/firebase";
+import { signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 // const Background = styled.div`
 //   background-color: #00adb5;
@@ -36,32 +39,23 @@ const FlexForm = styled.form`
 
 //logo
 const Logo = styled.img`
-  height: 3rem;
+  height: 2.5rem;
   /* width: 100px; */
   padding: 1rem 1rem 0.5rem 1rem;
   cursor: pointer;
 `;
 
-const ShowData = styled.div`
-  font-size: 1.8rem;
-  color: #ffffff;
-  text-align: center;
-  display: inline;
-  padding: 1rem;
-  font-family: "Itim", "cursive";
-`;
-
 const ButtonStyle = styled.button`
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   color: white;
   text-align: center;
   display: inline;
-  padding: 1rem;
+  padding: 0.8rem;
   font-family: "Itim", "cursive";
   background-color: #ff1b0f;
   border: none;
   border-radius: 0.5rem;
-  margin: 1rem 1rem;
+  margin: 1rem;
   cursor: pointer;
   &:hover {
     animation: ease-in-out;
@@ -71,44 +65,48 @@ const ButtonStyle = styled.button`
     color: white;
   }
 
-
   @media screen and (max-width: 700px) {
     padding: 0.5rem;
   }
 `;
 
 function Navbar() {
+  const [user, setUser] = useState(auth?.currentUser);
+
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      setUser(null);
+      alert("Logged out successfully");
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Flex>
       <Link to="/" style={{ textDecoration: "none" }}>
         <Logo src={logo} />
       </Link>
       <FlexForm>
-      <ButtonStyle>
-          <Link to="/login" style={{ textDecoration: "none" }}>
-            Admin Login
-          </Link>
-        </ButtonStyle>
-        {/* <ShowData>
-          <Link to="/showData" style={{ textDecoration: "none" }}>
-            view Employee Data
-          </Link>
-        </ShowData> */}
-        {/* <ButtonStyle>
-          <Link to="/showData" style={{ textDecoration: "none" }}>
-            Employee Data
-          </Link>
-        </ButtonStyle>
         <ButtonStyle>
-          <Link to="/searchData" style={{ textDecoration: "none" }}>
-            Search Employee
-          </Link>
-        </ButtonStyle> */}
-        {/* <ShowData>
-          <Link to="/searchData" style={{ textDecoration: "none" }}>
-            Search Employee Data
-          </Link>
-        </ShowData> */}
+          {user ? (
+            <Link
+              to="/"
+              style={{ textDecoration: "none" }}
+              onClick={handleLogout}
+            >
+             {auth?.currentUser?.displayName} Logout
+            </Link>
+          ) : (
+            <Link to="/login" style={{ textDecoration: "none" }}>
+              Admin Login
+            </Link>
+          )}
+        </ButtonStyle>
       </FlexForm>
     </Flex>
   );

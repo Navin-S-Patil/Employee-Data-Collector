@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import logo from "../img/employeePortalLogo.png";
-import { Link } from "react-router-dom";
-import axios from "axios";
+// import logo from "../img/employeePortalLogo.png";
+// import { Link } from "react-router-dom";
+// import axios from "axios";
 import Navbar from "./Navbar";
-
-const Background = styled.div`
-  background-color: #00adb5;
-  height: 100vh;
-  width: 100vw;
-`;
+import { db } from "../config/firebase";
+import { getDocs, collection } from "firebase/firestore";
+import { get } from "mongoose";
 
 const Flex = styled.form`
   display: flex;
@@ -113,20 +110,30 @@ const TableData = styled.td`
 function ShwoData() {
   const [employeeData, setEmployeeData] = useState([]);
 
+  const getRefrence = collection(db, "EmployeeLog ");
+
   useEffect(() => {
-    axios.get("http://localhost:5000/api/showData").then((res) => {
-      setEmployeeData(res.data.data);
-    });
+    const getEmployeeList = async () => {
+      //read the data
+      try {
+        const data = await getDocs(getRefrence);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getEmployeeList();
   }, []);
 
+  // useEffect(() => {
+  //   axios.get("http://localhost:5000/api/showData").then((res) => {
+  //     setEmployeeData(res.data.data);
+  //   });
+  // }, []);
+
   return (
-    <Background>
-      {/* <Flex>
-        <Logo src={logo} />
-        <ShowData>
-          <Link to="/">Enter Employee Data</Link>
-        </ShowData>
-      </Flex> */}
+    <>
       <Navbar />
 
       <WelcomeMessage>Welcome</WelcomeMessage>
@@ -158,7 +165,7 @@ function ShwoData() {
           })}
         </Table>
       )}
-    </Background>
+    </>
   );
 }
 

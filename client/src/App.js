@@ -4,20 +4,29 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import ShowData from "./components/ShowData";
 import SearchData from "./components/SearchData";
 import AdminLogin from "./components/AdminLogin";
+import AdminRegister from "./components/AdminRegister";
+import styled from "styled-components";
+
+const Background = styled.div`
+  background-color: rgba(153, 147, 147, 0.72);
+  height: 100vh;
+`;
 
 function App() {
   return (
     <div className="App">
-      {/* <EmployeeEntry /> */}
-      <Routes>
-        <Route path="/" element={<EmployeeEntry />} />
-        <Route path="/showData" element={<ShowData />} />
-        <Route path="/searchData" element={<SearchData />} />
-        <Route path="/login" element={<AdminLogin />} />
+      <Background>
+        {/* <EmployeeEntry /> */}
+        <Routes>
+          <Route path="/" element={<EmployeeEntry />} />
+          <Route path="/showData" element={<ShowData />} />
+          <Route path="/searchData" element={<SearchData />} />
+          <Route path="/login" element={<AdminLogin />} />
+          <Route path="/register" element={<AdminRegister />} />
 
-
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </Background>
     </div>
   );
 }

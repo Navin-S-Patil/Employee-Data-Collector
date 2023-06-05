@@ -227,7 +227,7 @@ function SearchData() {
   };
 
   return (
-    <Background>
+    <>
       <Navbar />
 
       <FlexBody>
@@ -270,7 +270,7 @@ function SearchData() {
           </Table>
         )}
       </FlexBody>
-    </Background>
+    </>
   );
 }
 

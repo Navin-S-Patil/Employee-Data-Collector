@@ -6,7 +6,7 @@ import styled from "styled-components";
 import Navbar from "./Navbar";
 import { db } from "../config/firebase";
 import { getDocs, collection } from "firebase/firestore";
-import { get } from "mongoose";
+// import { get } from "mongoose";
 
 const Flex = styled.form`
   display: flex;

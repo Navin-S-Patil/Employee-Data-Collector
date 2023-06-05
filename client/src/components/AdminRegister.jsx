@@ -134,7 +134,7 @@ function AdminLogin() {
     <>
       <Navbar />
       <FlexBody>
-        <WelcomeMessage>Login</WelcomeMessage>
+        <WelcomeMessage>Register</WelcomeMessage>
         <FlexForm>
           <Inputroll
             type="text"

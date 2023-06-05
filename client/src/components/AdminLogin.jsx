@@ -39,8 +39,8 @@ const WelcomeMessage = styled.h1`
 
 const Inputroll = styled.input`
   font-size: 1.8rem;
-  color: #ff1b0f;
-  background-color: #ffe569;
+  color: white;
+  background-color: #22211b;
   text-align: center;
   padding: 1rem;
   font-family: "sans-serif cursive";
@@ -53,7 +53,7 @@ const Inputroll = styled.input`
 
 const SubmitButton = styled.button`
   font-size: 1.8rem;
-  color: #ff1b0f;
+  color: #551A8B;
   background-color: #eeeeee;
   text-align: center;
   padding: 1rem 3rem;
@@ -89,7 +89,7 @@ const Error = styled.div`
 
 const RegisterLink = styled.div`
   font-size: 1.5rem;
-  color: #222831;
+  color: white;
   text-align: center;
   display: inline;
   padding: 1rem;

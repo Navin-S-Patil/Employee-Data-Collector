@@ -8,8 +8,12 @@ import AdminRegister from "./components/AdminRegister";
 import styled from "styled-components";
 
 const Background = styled.div`
-  background-color: rgba(153, 147, 147, 0.72);
+  ${'' /* background-color: rgba(153, 147, 147, 0.72); */}
   height: 100vh;
+  background-image:  url("https://coolbackgrounds.io/images/backgrounds/index/ranger-4df6c1b6.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 `;
 
 function App() {

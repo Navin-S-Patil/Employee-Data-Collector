@@ -140,11 +140,14 @@ function ShwoData() {
   //   });
   // }, []);
 
+  const date = new Date();
+
+
   return (
     <>
       <Navbar />
 
-      <WelcomeMessage>Welcome</WelcomeMessage>
+      <WelcomeMessage>Employee Log of {date.getDate}</WelcomeMessage>
 
       {employeeData.length === 0 ? (
         <h1 style={{ textAlign: "center", color: "#222831" }}>No Data Found</h1>

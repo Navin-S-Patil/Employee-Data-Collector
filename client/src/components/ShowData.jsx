@@ -6,7 +6,7 @@ import styled from "styled-components";
 import Navbar from "./Navbar";
 import { db } from "../config/firebase";
 import { getDocs, collection } from "firebase/firestore";
-// import { get } from "mongoose";
+import { get } from "mongoose";
 
 const Flex = styled.form`
   display: flex;
@@ -70,7 +70,7 @@ const TableRow = styled.tr`
   background-color: #eeeeee;
   font-size: 1.2rem;
   text-align: center;
-  margin: auto auto;
+  margin: auto;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
   border-radius: 0.3rem;
@@ -83,7 +83,7 @@ const TableHeadling = styled.th`
   margin: auto auto;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 `;
 
 const TableNormalRow = styled.tr`
@@ -107,17 +107,25 @@ const TableData = styled.td`
   font-size: 1.4rem;
 `;
 
+
 function ShwoData() {
   const [employeeData, setEmployeeData] = useState([]);
 
-  const getRefrence = collection(db, "EmployeeLog ");
+  const getRefrence = collection(db, "EmployeeLog");
 
   useEffect(() => {
     const getEmployeeList = async () => {
       //read the data
       try {
         const data = await getDocs(getRefrence);
-        console.log(data);
+
+        const filterData = data.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
+
+        console.log(filterData);
+        setEmployeeData(filterData);
       } catch (error) {
         console.log(error);
       }
@@ -152,14 +160,26 @@ function ShwoData() {
             <TableHeadling style={{ borderRadius: "0rem 0.3rem 0.3rem 0rem" }}>
               Mobile No.
             </TableHeadling>
+            <TableHeadling style={{ borderRadius: "0rem 0.3rem 0.3rem 0rem" }}>
+              Check-In
+            </TableHeadling>
+            <TableHeadling style={{ borderRadius: "0rem 0.3rem 0.3rem 0rem" }}>
+              Check-Out
+            </TableHeadling>
           </TableRow>
 
           {employeeData.map((item) => {
+
+            const InTime = item.InTime.toDate().toLocaleString().split(",")[1];
+            const OutTime = item.OutTime.toDate().toLocaleString().split(",")[1];
+
             return (
               <TableNormalRow>
-                <TableData>{item.employeeID}</TableData>
-                <TableData>{item.name}</TableData>
-                <TableData>{item.number}</TableData>
+                <TableData>{item.ID}</TableData>
+                <TableData>{item.Name}</TableData>
+                <TableData>{item.Mobile}</TableData> 
+                <TableData>{InTime}</TableData> 
+                <TableData>{OutTime}</TableData> 
               </TableNormalRow>
             );
           })}
